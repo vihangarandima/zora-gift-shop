@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sora Loom — Boutique Girls' Fashion &amp; Silk Couture</title>
+  <meta name="description" content="Sora Loom: Sundresses, romantic silk sleepwear and chiffon shawls for girls who love to dress beautifully. Polonnaruwa, Sri Lanka.">
+  <meta name="theme-color" content="#120722">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/modern.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body onload="if(window.state){state.currentWing='loom';renderCatalog();}">
+
+  <!-- Floating Nav -->
+  <div class="floating-nav-wrap">
+    <header class="floating-nav">
+      <a href="index.html" class="nav-brand">
+        <div class="nav-brand-logo">
+          <img src="brand/sora_loom_logo.jpg" alt="Sora Loom Emblem">
+        </div>
+        <div class="nav-brand-name">
+          SORA <span class="nav-brand-sub">Loom</span>
+        </div>
+      </a>
+
+      <div class="nav-wings">
+        <a href="index.html" class="nav-wing-btn">All Sora World</a>
+        <a href="gift.html" class="nav-wing-btn">🎁 Gift House</a>
+        <a href="loom.html" class="nav-wing-btn active">👗 Sora Loom</a>
+      </div>
+
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="#catalog">Dresses</a>
+        <a href="index.html#dispatch">Delivery</a>
+        <a href="index.html#reviews">Reviews</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="btn-lang" id="langToggleBtn">
+          <span id="currentLangLabel">සිංහල</span>
+        </button>
+        <button class="btn-bag" id="openBagBtn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span class="bag-count" id="bagCountBadge">0</span>
+        </button>
+      </div>
+    </header>
+  </div>
+
+  <main style="padding-top:140px;">
+    <section class="section-spacing" style="padding-top:20px;">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">
+            <span class="sparkle">🪻</span>
+            <span>FOR GIRLS WHO LOVE TO DRESS BEAUTIFULLY 😍💜</span>
+          </div>
+          <h2>Sora Loom Couture</h2>
+          <p>"We Wrap Love" — Breathable floral sundresses, romantic French lace satin sleepwear, and airy chiffon wraps tailored for grace and comfort.</p>
+        </div>
+
+        <!-- Catalog Toolbar -->
+        <div class="catalog-toolbar">
+          <div class="filter-pills">
+            <button class="filter-pill active" data-cat="all">All Loom</button>
+            <button class="filter-pill" data-cat="dresses">👗 Sundresses &amp; Frocks</button>
+            <button class="filter-pill" data-cat="sleepwear">🌙 Silk Sleepwear</button>
+            <button class="filter-pill" data-cat="shawls">🪻 Chiffon &amp; Shawls</button>
+          </div>
+          <div class="search-box">
+            <input type="text" id="productSearchInput" placeholder="Search dresses, sleepwear, shawls...">
+          </div>
+        </div>
+
+        <div class="products-grid" id="productsGrid"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Bag Drawer -->
+  <div class="bag-drawer-overlay" id="bagOverlay">
+    <div class="bag-drawer">
+      <div class="bag-header">
+        <h3>Your WhatsApp Bag</h3>
+        <button class="btn-close-bag" id="closeBagBtn">&times;</button>
+      </div>
+      <div class="bag-items-list" id="bagItemsList"></div>
+      <div class="bag-footer">
+        <div class="bag-subtotal-row">
+          <span>Estimated Total:</span>
+          <span id="bagSubtotal">Rs. 0 LKR</span>
+        </div>
+        <button type="button" class="btn-primary btn-whatsapp" id="bagCheckoutBtn" style="width:100%;justify-content:center;">
+          <span>Send Order via WhatsApp</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Speed Dial -->
+  <div class="floating-whatsapp-hub" id="floatingWaHub">
+    <div class="fab-options">
+      <a href="https://wa.me/94706008576" target="_blank" rel="noopener" class="fab-option-pill">
+        <span>🎁</span> Gift House (070 600 8576)
+      </a>
+      <a href="https://wa.me/94741896530" target="_blank" rel="noopener" class="fab-option-pill">
+        <span>👗</span> Sora Loom (074 189 6530)
+      </a>
+    </div>
+    <button class="fab-main-trigger" id="fabWaTrigger">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 1 1 8.2-8.2c0 4.5-3.7 8.2-8.2 8.2z"/></svg>
+    </button>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,255 @@
+@import "tailwindcss";
+
+/* Brand palette: extracted from the logos, see BRAND.md. Do not add new hues. */
+:root {
+  --sora-ink: #281b29;
+  --sora-plum: #8b5b9f;
+  --sora-plum-deep: #6e4a80;
+  --sora-lilac: #b48bcb;
+  --sora-periwinkle: #a492d2;
+  --sora-mist: #a49bba;
+  --sora-blush: #dbc7e0;
+  --sora-tint: #efdff3;
+  --sora-bg: #fbf6fb;
+  --sora-black: #070708;
+
+  /* Accent follows the active world (set by data-world on any ancestor). */
+  --sora-accent: var(--sora-lilac);
+  --sora-accent-soft: var(--sora-blush);
+}
+
+[data-world="loom"] {
+  --sora-accent: var(--sora-periwinkle);
+  --sora-accent-soft: color-mix(in oklab, var(--sora-periwinkle) 22%, white);
+}
+
+[data-world="gift"] {
+  --sora-accent: var(--sora-lilac);
+  --sora-accent-soft: var(--sora-blush);
+}
+
+@theme inline {
+  --color-ink: var(--sora-ink);
+  --color-plum: var(--sora-plum);
+  --color-plum-deep: var(--sora-plum-deep);
+  --color-lilac: var(--sora-lilac);
+  --color-periwinkle: var(--sora-periwinkle);
+  --color-mist: var(--sora-mist);
+  --color-blush: var(--sora-blush);
+  --color-tint: var(--sora-tint);
+  --color-bg: var(--sora-bg);
+  --color-black: var(--sora-black);
+  --color-accent: var(--sora-accent);
+  --color-accent-soft: var(--sora-accent-soft);
+
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-sans: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
+  --font-hand: var(--font-caveat), cursive;
+
+  --radius-card: 1.5rem;
+  --radius-xl2: 2rem;
+
+  --shadow-soft: 0 1px 2px rgb(40 27 41 / 0.04), 0 6px 16px -4px rgb(139 91 159 / 0.12),
+    0 18px 40px -12px rgb(139 91 159 / 0.14);
+  --shadow-lift: 0 2px 4px rgb(40 27 41 / 0.05), 0 12px 28px -6px rgb(139 91 159 / 0.2),
+    0 30px 60px -18px rgb(139 91 159 / 0.22);
+
+  /* Fluid type scale */
+  --text-display: clamp(2.75rem, 1.6rem + 5.2vw, 6.5rem);
+  --text-display--line-height: 0.95;
+  --text-h1: clamp(2.25rem, 1.5rem + 3.2vw, 4.25rem);
+  --text-h1--line-height: 1.02;
+  --text-h2: clamp(1.75rem, 1.3rem + 2vw, 3rem);
+  --text-h2--line-height: 1.08;
+  --text-h3: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
+  --text-h3--line-height: 1.2;
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--sora-bg);
+    color: var(--sora-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: var(--font-display);
+    font-variation-settings: "SOFT" 100;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+  :focus-visible {
+    outline: 2px solid var(--sora-plum);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  ::selection {
+    background: var(--sora-blush);
+    color: var(--sora-ink);
+  }
+}
+
+/* Paper grain over everything, very faint. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .16 0 0 0 0 .1 0 0 0 0 .16 0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--text-eyebrow);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--sora-plum-deep);
+}
+
+@utility container-sora {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 88rem;
+  padding-inline: 1rem;
+  @media (width >= 48rem) {
+    padding-inline: 2rem;
+  }
+  @media (width >= 80rem) {
+    padding-inline: 3rem;
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.7) rotate(20deg);
+    opacity: 0.6;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Preloader: thread draws once; skipped entirely on repeat visits. */
+html[data-seen] .preloader {
+  display: none;
+}
+.preloader {
+  animation: preloader-out 0.4s ease 0.7s forwards;
+}
+@keyframes preloader-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+.preloader-thread {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 0.7s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Footer thread drifts along the top edge. */
+.footer-thread {
+  animation: thread-run 24s linear infinite;
+}
+@keyframes thread-run {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Entrance animations in plain CSS so content paints before JavaScript loads.
+   On a first visit they wait for the preloader curtain. */
+.word-up {
+  transform: translateY(105%);
+  animation: word-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s) forwards;
+}
+.rise-in {
+  opacity: 0;
+  animation: rise-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s) forwards;
+}
+html:not([data-seen]) .word-up,
+html:not([data-seen]) .rise-in {
+  animation-delay: calc(var(--d, 0s) + 0.6s);
+}
+@keyframes word-up {
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(32px) rotate(var(--r, 0deg));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(var(--r, 0deg));
+  }
+}
+
+/* Custom cursor replaces the native one except where you type. */
+html.has-cursor,
+html.has-cursor a,
+html.has-cursor button {
+  cursor: none;
+}
+html.has-cursor input,
+html.has-cursor textarea {
+  cursor: text;
+}
+
+/* Gift box lid hop when a ribbon is picked or a box is completed. */
+.lid-bounce {
+  animation: lid-hop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes lid-hop {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  30% { transform: translateY(-22px) rotate(-5deg); }
+  60% { transform: translateY(0) rotate(0); }
+  75% { transform: translateY(-6px) rotate(1deg); }
+}
+
+/* Gift box builder: lid lifted while filling. */
+.lid-open {
+  transform: translate(-26px, -54px) rotate(-16deg);
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
