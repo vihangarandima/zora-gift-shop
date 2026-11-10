@@ -1,11 +1,12 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
-import { Bow } from "@/components/doodles";
 import { buttonClass } from "@/components/ui/Button";
 import { WhatsAppIcon } from "@/components/ui/Icons";
+import { images } from "@/lib/images";
 import { t } from "@/lib/i18n";
 import { orderMessage, orderWorld } from "@/lib/order";
 import { cartHasUnpriced, cartSubtotal, useShop, useUI } from "@/lib/store";
@@ -60,7 +61,9 @@ export function CartDrawer() {
 
             {lines.length === 0 ? (
               <div className="flex flex-1 flex-col items-center justify-center gap-4 px-8 text-center">
-                <Bow size={72} className="text-lilac" />
+                <span className="relative size-24 overflow-hidden rounded-full ring-4 ring-tint">
+                  <Image src={images.giftBox.src} alt="" fill sizes="96px" className="object-cover" />
+                </span>
                 <p className="font-display text-2xl">{t.cart.empty}</p>
                 <Link href="/shop" onClick={() => setOpen(false)} className={buttonClass({})}>{t.cta.shop}</Link>
               </div>
@@ -71,7 +74,9 @@ export function CartDrawer() {
                   <AnimatePresence initial={false}>
                     {lines.map((l) => (
                       <motion.li key={l.key} layout exit={{ opacity: 0, x: 40 }} className="flex gap-3 rounded-card bg-white p-3 shadow-soft">
-                        <span className="grid size-16 shrink-0 place-items-center rounded-2xl bg-tint text-2xl" aria-hidden>{l.world === "loom" ? "🪻" : "🍄"}</span>
+                        <span className="relative size-16 shrink-0 overflow-hidden rounded-2xl bg-tint" aria-hidden>
+                          <Image src={(l.world === "loom" ? images.loomDress : images.giftBox).src} alt="" fill sizes="64px" className="object-cover" />
+                        </span>
                         <div className="min-w-0 flex-1">
                           <p className="leading-snug font-semibold">{l.name}</p>
                           {l.details?.map((d) => <p key={d} className="truncate text-xs text-ink/65">{d}</p>)}

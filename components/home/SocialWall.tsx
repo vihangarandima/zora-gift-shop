@@ -1,8 +1,9 @@
 import clsx from "clsx";
-import { Heart, Sparkle } from "@/components/doodles";
+import Image from "next/image";
 import { Logo } from "@/components/ui/Logo";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { images } from "@/lib/images";
 import { t } from "@/lib/i18n";
 import { siteConfig, type SocialLink, type World } from "@/site.config";
 
@@ -11,7 +12,7 @@ const netVerb = { instagram: "Follow", tiktok: "Follow", youtube: "Subscribe", f
 
 type Item = SocialLink & { world: World };
 
-// No follower counts or post thumbnails here on purpose: only real screenshots/posts may go on this wall.
+// No follower counts on purpose. The big Instagram cards use mood images, not copied posts.
 function Card({ item, big }: { item: Item; big?: boolean }) {
   const gift = item.world === "gift";
   return (
@@ -21,18 +22,29 @@ function Card({ item, big }: { item: Item; big?: boolean }) {
       rel="noopener noreferrer"
       data-world={item.world}
       className={clsx(
-        "group relative flex h-full flex-col justify-between overflow-hidden rounded-card p-5 shadow-soft transition duration-500 hover:-translate-y-1 hover:shadow-lift md:p-6",
-        big ? "min-h-72" : "min-h-52",
+        "group relative isolate flex h-full flex-col justify-between overflow-hidden rounded-card p-5 shadow-soft transition duration-500 hover:-translate-y-1 hover:shadow-lift md:p-6",
+        big ? "min-h-80 md:min-h-96" : "min-h-52",
         item.network === "instagram" ? (gift ? "bg-plum text-white" : "bg-ink text-white") : "bg-white ring-1 ring-blush",
       )}
     >
       <div className="flex items-center justify-between">
-        <span className="eyebrow !text-current">{netLabel[item.network]}</span>
+        <span className={clsx("eyebrow", big ? "rounded-full bg-white/90 px-3 py-2 !text-ink backdrop-blur" : "!text-current")}>{netLabel[item.network]}</span>
         <span className="grid size-12 place-items-center rounded-full bg-white">
           <Logo world={item.world} size={item.world === "loom" ? 40 : 44} />
         </span>
       </div>
-      {big && <Heart size={64} className="absolute -right-2 bottom-16 rotate-12 opacity-20 transition-transform duration-700 group-hover:scale-125" />}
+      {big && (
+        <>
+          <Image
+            src={gift ? images.giftPlush.src : images.loomSleepwear.src}
+            alt=""
+            fill
+            sizes="(min-width: 768px) 50vw, 100vw"
+            className="-z-10 object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-105"
+          />
+          <div aria-hidden className={clsx("absolute inset-0 -z-10 bg-gradient-to-t to-transparent", gift ? "from-plum-deep/95 via-plum-deep/40" : "from-ink/95 via-ink/40")} />
+        </>
+      )}
       <div>
         <p className="font-display text-2xl md:text-3xl">{item.handle}</p>
         <p className="mt-1 text-sm">{t.worlds[item.world].name}</p>
@@ -58,8 +70,7 @@ export function SocialWall() {
     <section className="container-sora py-16 md:py-24">
       <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
         <SectionHeading eyebrow={t.home.socialEyebrow} title={t.home.socialTitle} />
-        <p className="font-hand flex items-center gap-2 text-2xl text-plum">
-          <Sparkle size={14} className="text-lilac" />
+        <p className="font-hand text-2xl text-plum">
           {t.home.socialNote}
         </p>
       </div>

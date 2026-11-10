@@ -20,7 +20,7 @@ export const en = {
     close: "Close",
     skip: "Skip to content",
   },
-  announcements: ["Island-wide delivery", "Custom gift boxes made to order", "New drops every week", "Order easily on WhatsApp 💜"],
+  announcements: ["Island-wide delivery", "Custom gift boxes made to order", "New drops every week", "Order easily on WhatsApp"],
   product: {
     photoSoon: "photo coming soon",
     quickAdd: "Quick add",

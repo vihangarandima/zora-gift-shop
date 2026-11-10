@@ -11,8 +11,9 @@ import { whatsappLink, type World } from "@/site.config";
 /** Floating order button. Follows the active world so messages reach the right shop. */
 export function WhatsAppFab() {
   const [world, setWorld] = useState<World>("gift");
-  // Product pages have their own sticky bar with a WhatsApp button on phones.
-  const onProduct = usePathname().startsWith("/product/");
+  const path = usePathname();
+  // These pages have their own sticky actions on phones, so the button would cover them.
+  const onProduct = path.startsWith("/product/") || path === "/gift-box";
 
   useEffect(() => {
     const read = () => setWorld((document.body.dataset.world as World) || "gift");

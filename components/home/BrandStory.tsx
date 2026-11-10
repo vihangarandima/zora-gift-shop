@@ -1,8 +1,8 @@
-import { Sparkle, ThreadCurl } from "@/components/doodles";
+import Image from "next/image";
 import { Logo } from "@/components/ui/Logo";
-import { PhotoPlaceholder } from "@/components/ui/PhotoPlaceholder";
 import { ClipReveal, Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { images } from "@/lib/images";
 import { t } from "@/lib/i18n";
 
 export function BrandStory() {
@@ -11,16 +11,16 @@ export function BrandStory() {
       <Reveal className="flex flex-col gap-6 lg:sticky lg:top-32 lg:self-start">
         <SectionHeading eyebrow={t.home.storyEyebrow} title={t.home.storyTitle} />
         <p className="max-w-lg text-lg leading-relaxed text-ink/80">{t.home.storyBody}</p>
-        <p className="font-hand flex items-center gap-3 text-3xl text-plum">
+        <p className="font-hand flex items-center gap-4 text-3xl text-plum">
           {t.home.storySign}
-          <ThreadCurl size={72} className="text-lilac" />
+          <span aria-hidden className="h-px w-16 bg-lilac" />
         </p>
       </Reveal>
 
-      {/* Masonry: two offset columns. Photo tiles stay placeholders until real photos arrive. */}
+      {/* Masonry: two offset columns of mood images. */}
       <div className="grid grid-cols-2 gap-3 md:gap-5">
         <div className="flex flex-col gap-3 md:gap-5">
-          <ClipReveal className="aspect-[3/4] overflow-hidden rounded-card"><PhotoPlaceholder world="gift" /></ClipReveal>
+          <ClipReveal className="relative aspect-[3/4] overflow-hidden rounded-card"><Image src={images.giftPlush.src} alt={images.giftPlush.alt} fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover" /></ClipReveal>
           <ClipReveal delay={0.15} className="grid aspect-square place-items-center rounded-card bg-plum p-6 text-center text-white">
             <p className="font-display text-lg leading-tight sm:text-2xl md:text-3xl">gifts · fashion · beauty · accessories</p>
           </ClipReveal>
@@ -28,9 +28,8 @@ export function BrandStory() {
         <div className="flex flex-col gap-3 pt-12 md:gap-5 md:pt-20">
           <ClipReveal delay={0.1} className="relative grid aspect-square place-items-center rounded-card bg-white shadow-soft">
             <Logo world="loom" size={130} />
-            <Sparkle size={16} twinkle className="absolute top-5 right-6 text-periwinkle" />
           </ClipReveal>
-          <ClipReveal delay={0.25} className="aspect-[3/4] overflow-hidden rounded-card"><PhotoPlaceholder world="loom" /></ClipReveal>
+          <ClipReveal delay={0.25} className="relative aspect-[3/4] overflow-hidden rounded-card"><Image src={images.loomDress.src} alt={images.loomDress.alt} fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover object-top" /></ClipReveal>
         </div>
       </div>
     </section>

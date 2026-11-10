@@ -1,10 +1,11 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
 import { useState } from "react";
-import { ScallopEdge, Sparkle } from "@/components/doodles";
 import { WhatsAppIcon } from "@/components/ui/Icons";
 import { confetti } from "@/lib/confetti";
+import { images } from "@/lib/images";
 import { t } from "@/lib/i18n";
 import { whatsappLink } from "@/site.config";
 
@@ -13,12 +14,11 @@ export function Club() {
   const [joined, setJoined] = useState(false);
 
   return (
-    <section className="py-8">
-      <ScallopEdge className="text-plum" />
-      <div className="relative overflow-hidden bg-plum py-16 text-white md:py-24">
-        <Sparkle size={28} twinkle className="absolute top-10 left-[8%] text-lilac" />
-        <Sparkle size={18} twinkle className="absolute right-[10%] bottom-12 text-periwinkle [animation-delay:1.2s]" />
-        <div className="container-sora flex flex-col items-center gap-6 text-center">
+    <section className="container-sora py-8 md:py-12">
+      <div className="relative isolate overflow-hidden rounded-xl2 bg-plum-deep py-16 text-white shadow-lift md:py-24">
+        <Image src={images.giftHamper.src} alt="" fill sizes="100vw" className="-z-10 object-cover" />
+        <div aria-hidden className="absolute inset-0 -z-10 bg-plum-deep/85" />
+        <div className="px-5 flex flex-col items-center gap-6 text-center">
           <p className="eyebrow !text-white">{t.home.clubEyebrow}</p>
           <h2 className="text-h1 max-w-[16ch]">{t.home.clubTitle}</h2>
           <p className="max-w-md text-lg text-white">{t.home.clubBody}</p>
@@ -43,7 +43,6 @@ export function Club() {
           </AnimatePresence>
         </div>
       </div>
-      <ScallopEdge className="text-plum" flip />
     </section>
   );
 }

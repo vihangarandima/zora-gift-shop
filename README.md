@@ -36,6 +36,7 @@ Open http://localhost:3000. Other commands:
 | `app/globals.css` | Colour tokens, type scale, animations |
 | `app/` | One folder per page (`shop`, `product/[slug]`, `gift-box`, `checkout`, …) |
 | `components/` | `home/`, `shop/`, `product/`, `cart/`, `giftbox/`, `layout/`, `ui/`, `doodles/` |
+| `lib/images.ts` + `public/images/` | The AI-generated mood images (hero, category tiles, banners). Replace a file with a real photo of the same name to swap it |
 | `lib/order.ts` | Builds the WhatsApp order message |
 | `lib/payments.ts` | Placeholder for adding PayHere or Stripe later |
 | `BRAND.md` | Palette, fonts, tone of voice and logo rules |
@@ -43,7 +44,7 @@ Open http://localhost:3000. Other commands:
 
 ## Add products and photos
 
-1. Put real photos in `public/products/`, named after the product, e.g. `lilac-sundress-1.jpg`, `lilac-sundress-2.jpg`. Square or 4:5 portrait, at least 1200 px wide. **Only real product photos: no stock or AI images.**
+1. Put real photos in `public/products/`, named after the product, e.g. `lilac-sundress-1.jpg`, `lilac-sundress-2.jpg`. Square or 4:5 portrait, at least 1200 px wide. **Only real product photos for products.** The AI images in `public/images/` are decoration only; never use them as a product's photo, because customers would expect to receive exactly what they see.
 2. Add the product to `data/products.ts`:
 
 ```ts
@@ -68,7 +69,7 @@ The second photo shows when someone hovers over the card. Products with no photo
 
 ## Change colours or fonts
 
-Colours are CSS variables at the top of `app/globals.css` (`--sora-plum`, `--sora-lilac`, …). They were extracted from the logos, so change them only if the brand changes, and check that text still meets WCAG AA contrast (at least 4.5:1 for small text). Fonts are set in `app/layout.tsx` with `next/font`.
+Colours are CSS variables at the top of `app/globals.css` (`--sora-plum`, `--sora-lilac`, …). They were extracted from the logos, so change them only if the brand changes, and check that text still meets WCAG AA contrast (at least 4.5:1 for small text). Fonts (Cormorant Garamond for headings and notes, Nunito Sans for text) are set in `app/layout.tsx` with `next/font`.
 
 ## Things still waiting on the owner
 
@@ -95,7 +96,7 @@ These show a friendly "we'll confirm on WhatsApp" message until they're filled i
 
 Every push to the main branch redeploys the site automatically.
 
-## Quality checks (last run 2026-11-09)
+## Quality checks (last run 2026-11-09, before the switch to AI mood images and Cormorant Garamond; re-run Lighthouse after deploying)
 
 Lighthouse, mobile, production build:
 

@@ -42,9 +42,9 @@
   --color-accent: var(--sora-accent);
   --color-accent-soft: var(--sora-accent-soft);
 
-  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-display: var(--font-cormorant), ui-serif, Georgia, serif;
   --font-sans: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
-  --font-hand: var(--font-caveat), cursive;
+  --font-hand: var(--font-cormorant), ui-serif, Georgia, serif;
 
   --radius-card: 1.5rem;
   --radius-xl2: 2rem;
@@ -55,13 +55,13 @@
     0 30px 60px -18px rgb(139 91 159 / 0.22);
 
   /* Fluid type scale */
-  --text-display: clamp(2.75rem, 1.6rem + 5.2vw, 6.5rem);
-  --text-display--line-height: 0.95;
-  --text-h1: clamp(2.25rem, 1.5rem + 3.2vw, 4.25rem);
+  --text-display: clamp(3.1rem, 1.8rem + 5.8vw, 7.25rem);
+  --text-display--line-height: 0.92;
+  --text-h1: clamp(2.5rem, 1.7rem + 3.5vw, 4.75rem);
   --text-h1--line-height: 1.02;
-  --text-h2: clamp(1.75rem, 1.3rem + 2vw, 3rem);
+  --text-h2: clamp(2rem, 1.5rem + 2.2vw, 3.4rem);
   --text-h2--line-height: 1.08;
-  --text-h3: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
+  --text-h3: clamp(1.45rem, 1.25rem + 0.8vw, 1.9rem);
   --text-h3--line-height: 1.2;
   --text-eyebrow: 0.75rem;
   --text-eyebrow--line-height: 1;
@@ -84,9 +84,13 @@
   h3,
   .font-display {
     font-family: var(--font-display);
-    font-variation-settings: "SOFT" 100;
-    font-weight: 400;
-    letter-spacing: -0.02em;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+  }
+  /* Accent notes: Cormorant italic instead of handwriting. */
+  .font-hand {
+    font-style: italic;
+    font-weight: 500;
   }
   :focus-visible {
     outline: 2px solid var(--sora-plum);

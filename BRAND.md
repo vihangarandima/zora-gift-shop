@@ -38,9 +38,9 @@ Extracted with `scripts/extract_palette.py` (k-means on the logo pixels, near-wh
 
 ## Typography
 
-- **Display:** *Fraunces* (variable, `SOFT` 100, `WONK` 1, opsz high). A soft serif that echoes the "SORA" wordmark serif in both logos.
+- **Display:** *Cormorant Garamond* (500/600, with italics). A tall, refined serif that echoes the "SORA" wordmark serif in both logos.
 - **Body:** *Nunito Sans*. Rounded and friendly, readable at small sizes on phones.
-- **Accent:** *Caveat*, only for small handwritten notes (echoes Loom's "we wrap love" script). Never for prices or buttons.
+- **Accent:** *Cormorant Garamond italic* for small notes (echoes Loom's "we wrap love" script). Never for prices or buttons.
 - **Sinhala (later):** *Noto Sans Sinhala*, already chosen for the i18n pass.
 - Fluid sizes with `clamp()`. Eyebrow labels in Nunito Sans, 12–13 px, uppercase, `letter-spacing: .18em`, in plum.
 
@@ -58,7 +58,7 @@ Warm, sisterly and short. The social accounts are Sinhala-first with English mix
 2. Keep clear space around each logo of at least 1/4 of its width.
 3. **Gift House badge:** works on any palette background. Minimum 40 px.
 4. **Loom mark:** black ink, so place it only on `--sora-bg`, `--sora-tint`, `--sora-blush` or white. On plum or ink, put it inside a light round chip. Minimum 56 px wide (the script line gets unreadable below that).
-5. Don't upscale the current 150 px files beyond 1×. Large uses (hero, footer) use the typeset "SORA" wordmark in Fraunces until high-res logos arrive.
+5. Don't upscale the current 150 px files beyond 1×. Large uses (hero, footer) use the typeset "SORA" wordmark in Cormorant Garamond until high-res logos arrive.
 
 ## Missing (needed from the owner)
 

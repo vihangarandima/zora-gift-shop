@@ -2,9 +2,9 @@
 
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
-import { Bow, Sparkle, Stitch } from "@/components/doodles";
 import { categoriesFor } from "@/data/categories";
 import { newIn } from "@/data/products";
 import { ArrowIcon } from "@/components/ui/Icons";
@@ -23,8 +23,8 @@ function Carousel({ world }: { world: World }) {
     return (
       <div className="flex flex-col items-start gap-5 rounded-xl2 bg-white p-6 shadow-soft ring-1 ring-blush md:flex-row md:items-center md:justify-between md:p-10">
         <div className="flex items-center gap-5">
-          <span className="grid size-16 shrink-0 place-items-center rounded-full bg-accent-soft text-plum">
-            {world === "gift" ? <Bow size={40} /> : <Sparkle size={28} twinkle />}
+          <span className="relative size-16 shrink-0 overflow-hidden rounded-full ring-4 ring-tint">
+            <Image src={categoriesFor(world)[0].image.src} alt="" fill sizes="64px" className="object-cover" />
           </span>
           <p className="max-w-md text-lg">{t.home.newInEmpty}</p>
         </div>
@@ -58,20 +58,26 @@ function CategoryTiles({ world }: { world: World }) {
           <Link
             href={`/shop/${world}?category=${c.id}`}
             className={clsx(
-              "group relative flex aspect-[4/5] flex-col justify-end overflow-hidden rounded-card p-4 shadow-soft transition duration-500 hover:-translate-y-1 hover:shadow-lift md:p-6",
+              "group relative isolate flex aspect-[4/5] flex-col justify-end overflow-hidden rounded-card p-4 text-white shadow-soft transition duration-500 hover:-translate-y-1 hover:shadow-lift md:p-6",
               i % 2 ? "bg-tint" : "bg-accent-soft",
             )}
           >
+            <div className="absolute inset-0 -z-10 transition-transform duration-[1.2s] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-110">
+              <Image
+                src={c.image.src}
+                alt=""
+                fill
+                sizes={c.zoom ? "(min-width: 1024px) 50vw, 100vw" : "(min-width: 1024px) 25vw, 50vw"}
+                className="object-cover"
+                style={{ objectPosition: c.focus, transform: c.zoom ? `scale(${c.zoom})` : undefined, transformOrigin: c.focus }}
+              />
+            </div>
+            <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-ink/85 via-ink/20 to-transparent" />
             {/* Decorative numeral, rendered as CSS content so it is not read out */}
-            <span aria-hidden data-n={String(i + 1).padStart(2, "0")} className="absolute top-3 right-4 font-display text-5xl text-white/80 before:content-[attr(data-n)] md:text-7xl" />
-            {world === "loom" ? (
-              <Stitch className="absolute top-1/2 left-0 w-full -rotate-6 text-periwinkle/70" />
-            ) : (
-              <Bow size={48} className="absolute top-4 left-4 -rotate-12 md:top-[26%] md:left-6 text-lilac transition-transform duration-700 group-hover:rotate-6" />
-            )}
-            <p className="font-display relative text-xl leading-tight md:text-2xl">{c.name}</p>
-            <p className="relative text-sm text-ink/70">{c.blurb}</p>
-            <span className="relative mt-3 inline-flex items-center gap-1 text-sm font-bold text-ink">
+            <span aria-hidden data-n={String(i + 1).padStart(2, "0")} className="absolute top-3 right-4 font-display text-4xl text-white/90 italic before:content-[attr(data-n)] md:text-5xl" />
+            <p className="font-display relative text-2xl leading-tight md:text-3xl">{c.name}</p>
+            <p className="relative text-sm text-white/85">{c.blurb}</p>
+            <span className="relative mt-3 inline-flex items-center gap-1 text-sm font-bold">
               {t.cta.explore}
               <ArrowIcon width={16} height={16} className="transition-transform group-hover:translate-x-1" />
             </span>

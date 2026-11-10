@@ -5,7 +5,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Bow, Sparkle } from "@/components/doodles";
 import { categories as allCategories, categoriesFor } from "@/data/categories";
 import { products as allProducts, productsFor } from "@/data/products";
 import type { Product } from "@/data/types";
@@ -14,6 +13,7 @@ import { SearchIcon } from "@/components/ui/Icons";
 import { PhotoPlaceholder } from "@/components/ui/PhotoPlaceholder";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { Chip } from "@/components/ui/Sticker";
+import { images } from "@/lib/images";
 import { t } from "@/lib/i18n";
 import { formatPrice, siteConfig, type World } from "@/site.config";
 
@@ -47,7 +47,9 @@ function EmptyStore({ world }: { world?: World }) {
   const worlds: World[] = world ? [world] : ["gift", "loom"];
   return (
     <div className="flex flex-col items-center gap-6 rounded-xl2 bg-white px-6 py-14 text-center shadow-soft ring-1 ring-blush">
-      <Bow size={80} className="text-lilac" />
+      <span className="relative size-24 overflow-hidden rounded-full ring-4 ring-tint">
+        <Image src={(world === "loom" ? images.loomDress : images.giftBox).src} alt="" fill sizes="96px" className="object-cover" />
+      </span>
       <h2 className="text-h2">{t.shop.emptyTitle}</h2>
       <p className="max-w-lg text-lg text-ink/75">{t.shop.emptyStore}</p>
       <div className="flex flex-wrap justify-center gap-2">
@@ -120,10 +122,13 @@ export function ShopView({ world }: { world?: World }) {
         <EmptyStore world={world} />
         <ul className="mt-10 grid grid-cols-2 gap-3 md:grid-cols-4">
           {cats.map((c) => (
-            <li key={c.id} data-world={c.world} className="rounded-card bg-accent-soft p-5">
-              <Sparkle size={14} className="mb-6 text-plum" />
+            <li key={c.id} data-world={c.world} className="relative isolate flex aspect-[4/5] flex-col sm:aspect-[4/3] justify-end overflow-hidden rounded-card p-4 text-white shadow-soft">
+              <div className="absolute inset-0 -z-10">
+                <Image src={c.image.src} alt="" fill sizes="(min-width: 768px) 25vw, 50vw" className="object-cover" style={{ objectPosition: c.focus, transform: c.zoom ? `scale(${c.zoom})` : undefined, transformOrigin: c.focus }} />
+              </div>
+              <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-ink/85 via-ink/25 to-transparent" />
               <p className="font-display text-xl">{c.name}</p>
-              <p className="text-sm text-ink/70">{c.blurb}</p>
+              <p className="text-sm text-white/85">{c.blurb}</p>
             </li>
           ))}
         </ul>

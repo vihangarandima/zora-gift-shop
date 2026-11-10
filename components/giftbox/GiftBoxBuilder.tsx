@@ -2,13 +2,13 @@
 
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
 import { useState } from "react";
-import { Sparkle } from "@/components/doodles";
-import { GiftArt } from "@/components/doodles/Illustrations";
 import { inputClass } from "@/components/cart/CheckoutForm";
 import { Button, buttonClass } from "@/components/ui/Button";
 import { WhatsAppIcon } from "@/components/ui/Icons";
 import { confetti } from "@/lib/confetti";
+import { images } from "@/lib/images";
 import { t } from "@/lib/i18n";
 import { useShop, useUI } from "@/lib/store";
 import { formatPrice, siteConfig, whatsappLink, type Ribbon } from "@/site.config";
@@ -16,60 +16,50 @@ import { formatPrice, siteConfig, whatsappLink, type Ribbon } from "@/site.confi
 const { boxes, fillings, ribbons } = siteConfig.giftBox;
 const steps = t.giftBox.steps;
 
-const fillingEmoji: Record<string, string> = {
-  "Soft toy": "🧸",
-  "Hand cream": "🧴",
-  Fragrance: "🌸",
-  "Hair products": "🎀",
-  Pouch: "👛",
-  Handbag: "👜",
-  Stationery: "✏️",
-  "Surprise me": "✨",
-};
-
-// Spots inside the box (percent of the preview) where fillings settle.
-const spots = [
-  [30, 58], [50, 54], [68, 59], [40, 70], [60, 71], [26, 76], [74, 76], [50, 80],
-];
-
 function Preview({ ribbon, items, closed, boxName, card }: { ribbon: string; items: string[]; closed: boolean; boxName?: string; card: string }) {
+  const img = closed ? images.giftBox : images.giftHamper;
   return (
-    <div className="relative mx-auto aspect-square w-full max-w-md rounded-xl2 bg-blush/50">
-      <Sparkle size={18} twinkle className="absolute top-6 left-8 text-white" />
-      <Sparkle size={12} twinkle className="absolute top-14 right-10 text-white [animation-delay:1s]" />
-      <div className="absolute inset-x-[10%] top-[16%] bottom-0 text-plum">
-        <GiftArt key={String(closed)} bow={ribbon} lidClassName={closed ? "lid-bounce" : "lid-open"} />
-      </div>
-      <AnimatePresence>
-        {!closed &&
-          items.map((it, i) => (
-            <motion.span
-              key={it}
-              className="absolute grid size-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-white text-2xl shadow-soft"
-              style={{ left: `${spots[i % spots.length][0]}%`, top: `${spots[i % spots.length][1]}%` }}
-              initial={{ y: -160, opacity: 0, rotate: -30 }}
-              animate={{ y: 0, opacity: 1, rotate: 0 }}
-              exit={{ y: -20, opacity: 0, scale: 0.6 }}
-              transition={{ type: "spring", stiffness: 260, damping: 14 }}
-              title={it}
-            >
-              {fillingEmoji[it] ?? "🎁"}
-            </motion.span>
-          ))}
+    <div className="relative isolate mx-auto aspect-square w-full max-w-md overflow-hidden rounded-xl2 bg-blush/50 shadow-soft">
+      <AnimatePresence initial={false}>
+        <motion.div key={img.src} className="absolute inset-0 -z-10" initial={{ opacity: 0, scale: 1.06 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.6 }}>
+          <Image src={img.src} alt={img.alt} fill sizes="(min-width: 1024px) 28rem, 100vw" className="object-cover" />
+        </motion.div>
       </AnimatePresence>
+      <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-ink/60 via-transparent to-transparent" />
+
+      {/* Ribbon colour, shown as a satin band across the corner */}
+      <span aria-hidden className="absolute top-6 -right-12 h-7 w-48 rotate-45 shadow-soft transition-colors duration-500" style={{ background: ribbon }} />
+
+      <ul className="absolute inset-x-4 bottom-4 flex flex-wrap gap-2" aria-label="In your box">
+        <AnimatePresence>
+          {items.map((it) => (
+            <motion.li
+              key={it}
+              layout
+              className="rounded-full bg-white/90 px-3 py-1.5 text-xs font-bold text-ink shadow-soft backdrop-blur"
+              initial={{ y: -30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            >
+              {it}
+            </motion.li>
+          ))}
+        </AnimatePresence>
+      </ul>
       <AnimatePresence>
         {card && (
           <motion.p
             initial={{ opacity: 0, rotate: 8, y: 20 }}
-            animate={{ opacity: 1, rotate: -4, y: 0 }}
+            animate={{ opacity: 1, rotate: -3, y: 0 }}
             exit={{ opacity: 0 }}
-            className="font-hand absolute right-4 bottom-4 max-w-[55%] rounded-xl bg-white px-3 py-2 text-lg leading-tight text-plum-deep shadow-soft"
+            className="font-hand absolute top-14 left-4 max-w-[60%] rounded-xl bg-white px-3 py-2 text-lg leading-tight text-plum-deep shadow-soft"
           >
             {card.length > 60 ? `${card.slice(0, 60)}…` : card}
           </motion.p>
         )}
       </AnimatePresence>
-      {boxName && <span className="eyebrow absolute top-4 left-1/2 -translate-x-1/2 rounded-full bg-white/80 px-3 py-1.5">{boxName}</span>}
+      {boxName && <span className="eyebrow absolute top-4 left-4 rounded-full bg-white/90 px-3 py-1.5">{boxName}</span>}
     </div>
   );
 }
@@ -139,7 +129,7 @@ export function GiftBoxBuilder() {
           <motion.div key={closed ? "done" : step} initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.3 }} className="flex flex-col gap-5">
             {closed ? (
               <>
-                <h2 className="text-h2">All wrapped up! 🎀</h2>
+                <h2 className="text-h2">All wrapped up.</h2>
                 <ul className="space-y-1 rounded-card bg-white p-5 text-sm ring-1 ring-blush">
                   {details.map((d) => <li key={d}>{d}</li>)}
                   <li className="pt-2 font-bold">{box?.priceLKR ? formatPrice(box.priceLKR) : t.giftBox.priceOnWhatsApp}</li>
@@ -164,7 +154,9 @@ export function GiftBoxBuilder() {
                       aria-pressed={boxId === b.id}
                       className={clsx("flex flex-col items-start gap-2 rounded-card bg-white p-5 text-left ring-1 transition hover:-translate-y-1 hover:shadow-soft", boxId === b.id ? "ring-2 ring-plum" : "ring-blush")}
                     >
-                      <span className="text-3xl" aria-hidden style={{ fontSize: `${1.5 + i * 0.5}rem` }}>🎁</span>
+                      <span aria-hidden className="relative overflow-hidden rounded-full ring-2 ring-tint" style={{ width: `${2.5 + i * 0.75}rem`, height: `${2.5 + i * 0.75}rem` }}>
+                        <Image src={images.giftBox.src} alt="" fill sizes="64px" className="object-cover" />
+                      </span>
                       <span className="font-display text-xl">{b.name}</span>
                       <span className="text-sm text-ink/70">{b.blurb} · {b.items}</span>
                       <span className="text-sm font-bold">{b.priceLKR ? formatPrice(b.priceLKR) : t.giftBox.priceOnWhatsApp}</span>
@@ -188,7 +180,7 @@ export function GiftBoxBuilder() {
                         aria-pressed={on}
                         className={clsx("inline-flex min-h-12 items-center gap-2 rounded-full px-5 font-semibold ring-1 transition", on ? "bg-ink text-white ring-ink" : "bg-white ring-blush hover:ring-plum")}
                       >
-                        <span aria-hidden>{fillingEmoji[f]}</span> {f}
+                        {f}
                       </motion.button>
                     );
                   })}
@@ -237,7 +229,7 @@ export function GiftBoxBuilder() {
         {!closed && (
           <div className="flex gap-3">
             {step > 0 && <Button variant="secondary" size="lg" onClick={() => setStep(step - 1)}>{t.giftBox.back}</Button>}
-            <Button size="lg" onClick={next} disabled={!canNext} className="flex-1 sm:flex-none">{last ? "Wrap it up 🎀" : t.giftBox.next}</Button>
+            <Button size="lg" onClick={next} disabled={!canNext} className="flex-1 sm:flex-none">{last ? "Wrap it up" : t.giftBox.next}</Button>
           </div>
         )}
       </div>

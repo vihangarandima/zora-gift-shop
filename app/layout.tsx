@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Caveat, Fraunces, Nunito_Sans } from "next/font/google";
+import { Cormorant_Garamond, Nunito_Sans } from "next/font/google";
 import Script from "next/script";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { Cursor } from "@/components/layout/Cursor";
@@ -13,15 +13,15 @@ import { WhatsAppFab } from "@/components/layout/WhatsAppFab";
 import { siteConfig } from "@/site.config";
 import "./globals.css";
 
-const fraunces = Fraunces({
+// Headings and the italic accent notes. Only the weights in use are loaded.
+const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  axes: ["SOFT"], // only the soft axis is used; dropping WONK/opsz roughly halves the file
-  variable: "--font-fraunces",
+  weight: ["500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-cormorant",
   display: "swap",
 });
 const nunito = Nunito_Sans({ subsets: ["latin"], variable: "--font-nunito", display: "swap" });
-// Handwritten accent: small notes only, so it is not preloaded.
-const caveat = Caveat({ subsets: ["latin"], variable: "--font-caveat", display: "swap", preload: false });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -35,7 +35,7 @@ export const viewport: Viewport = { themeColor: "#fbf6fb" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${nunito.variable} ${caveat.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${cormorant.variable} ${nunito.variable}`} suppressHydrationWarning>
       <body data-world="gift">
         <Script id="preloader-seen" strategy="beforeInteractive">{preloaderScript}</Script>
         <MotionProvider>

@@ -2,11 +2,11 @@
 
 import clsx from "clsx";
 import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
+import Image from "next/image";
 import { useRef } from "react";
 import { WaveEdge } from "@/components/doodles";
-import { PhotoPlaceholder } from "@/components/ui/PhotoPlaceholder";
+import { images, type SiteImage } from "@/lib/images";
 import { t } from "@/lib/i18n";
-import type { World } from "@/site.config";
 
 function Word({ word, i, progress }: { word: string; i: number; progress: MotionValue<number> }) {
   const dir = i % 2 ? 1 : -1;
@@ -18,12 +18,12 @@ function Word({ word, i, progress }: { word: string; i: number; progress: Motion
   );
 }
 
-function Panel({ world, caption, progress, speed, className }: { world: World; caption: string; progress: MotionValue<number>; speed: number; className?: string }) {
+function Panel({ image, caption, progress, speed, className }: { image: SiteImage; caption: string; progress: MotionValue<number>; speed: number; className?: string }) {
   const y = useTransform(progress, [0, 1], [speed, -speed]);
   return (
     <motion.figure style={{ y }} className={clsx("relative overflow-hidden rounded-xl2 shadow-soft", className)}>
-      <PhotoPlaceholder world={world} />
-      <figcaption className="absolute bottom-4 left-4 rounded-full bg-white/90 px-4 py-2 text-sm font-semibold backdrop-blur">{caption}</figcaption>
+      <Image src={image.src} alt={image.alt} fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
+      <figcaption className="absolute bottom-4 left-4 rounded-full bg-white/90 z-10 px-4 py-2 text-sm font-semibold backdrop-blur">{caption}</figcaption>
     </motion.figure>
   );
 }
@@ -41,8 +41,8 @@ export function EditorialBand() {
             {t.home.editorial.map((w, i) => <Word key={w} word={w} i={i} progress={scrollYProgress} />)}
           </p>
           <div className="grid grid-cols-6 gap-4">
-            <Panel world="gift" caption="Sora Gift House" progress={scrollYProgress} speed={30} className="col-span-6 aspect-[16/9]" />
-            <Panel world="loom" caption="Sora Loom · we wrap love" progress={scrollYProgress} speed={60} className="col-span-4 col-start-2 aspect-[16/10]" />
+            <Panel image={images.giftHamper} caption="Sora Gift House" progress={scrollYProgress} speed={30} className="col-span-6 aspect-[16/9]" />
+            <Panel image={images.loomSleepwear} caption="Sora Loom · we wrap love" progress={scrollYProgress} speed={60} className="col-span-4 col-start-2 aspect-[16/10]" />
           </div>
         </div>
       </div>

@@ -81,7 +81,7 @@ export function Footer() {
 
         <p className="mt-6 flex flex-col justify-between gap-2 text-sm text-ink/70 sm:flex-row">
           <span>© {new Date().getFullYear()} {t.footer.rights}</span>
-          <span className="font-hand text-lg text-plum-deep">we wrap love 💜</span>
+          <span className="font-hand text-lg text-plum-deep">we wrap love</span>
         </p>
       </div>
     </footer>

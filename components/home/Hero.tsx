@@ -1,58 +1,53 @@
 "use client";
 
-import clsx from "clsx";
 import { motion, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
-import { Bow, Sparkle, Stitch } from "@/components/doodles";
-import { DressArt, GiftArt } from "@/components/doodles/Illustrations";
 import { ArrowIcon } from "@/components/ui/Icons";
 import { Logo } from "@/components/ui/Logo";
 import { WordsUp } from "@/components/ui/Reveal";
+import { images } from "@/lib/images";
 import { t } from "@/lib/i18n";
 import type { World } from "@/site.config";
 
 function Panel({ world, progress }: { world: World; progress: ReturnType<typeof useScroll>["scrollYProgress"] }) {
-  const artY = useTransform(progress, [0, 1], [0, world === "loom" ? -60 : -90]);
-  const sparkY = useTransform(progress, [0, 1], [0, -140]);
+  const imgY = useTransform(progress, [0, 1], ["0%", world === "loom" ? "8%" : "12%"]);
   const loom = world === "loom";
+  const img = loom ? images.loomDress : images.giftBox;
 
   return (
     <Link
       href={`/shop/${world}`}
       data-world={world}
-      className={clsx(
-        "group relative flex min-h-[27rem] flex-1 flex-col justify-between overflow-hidden rounded-xl2 p-5 shadow-soft transition-[flex-grow,box-shadow] duration-700 ease-[cubic-bezier(.22,1,.36,1)] hover:shadow-lift md:min-h-[34rem] md:p-8 md:hover:grow-[1.6]",
-        loom ? "bg-[color-mix(in_oklab,var(--sora-periwinkle)_20%,white)]" : "bg-blush",
-      )}
+      className="group relative isolate flex min-h-[30rem] flex-1 flex-col justify-between overflow-hidden rounded-xl2 bg-tint p-5 shadow-soft transition-[flex-grow,box-shadow] duration-700 ease-[cubic-bezier(.22,1,.36,1)] hover:shadow-lift md:min-h-[38rem] md:p-8 md:hover:grow-[1.6]"
     >
-      <div className="relative z-10 flex items-start justify-between">
+      <motion.div style={{ y: imgY }} className="absolute -inset-y-[8%] inset-x-0 -z-10">
+        <Image
+          src={img.src}
+          alt={img.alt}
+          fill
+          priority
+          sizes="(min-width: 768px) 50vw, 100vw"
+          className="object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-105"
+          style={{ objectPosition: loom ? "50% 30%" : "50% 45%" }}
+        />
+      </motion.div>
+      <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-ink/80 via-ink/15 to-transparent" />
+
+      <div className="relative flex items-start justify-between">
         <span className="grid size-20 place-items-center rounded-full bg-white shadow-soft md:size-24">
           <Logo world={world} size={loom ? 72 : 88} />
         </span>
-        <span className="eyebrow rounded-full bg-white/70 px-3 py-2 backdrop-blur">{loom ? "clothing" : "gifts"}</span>
+        <span className="eyebrow rounded-full bg-white/85 px-3 py-2 backdrop-blur">{loom ? "clothing" : "gifts"}</span>
       </div>
 
-      <motion.div style={{ y: artY }} className="pointer-events-none absolute inset-x-0 top-[18%] mx-auto w-[44%] max-w-72 md:w-[56%] text-plum transition-transform duration-700 group-hover:scale-105 md:top-[14%]">
-        {loom ? <DressArt /> : <GiftArt bow="var(--sora-plum)" />}
-      </motion.div>
-      <motion.div style={{ y: sparkY }} className="pointer-events-none absolute inset-0">
-        <Sparkle size={18} twinkle className="absolute top-[30%] left-[12%] text-white" />
-        <Sparkle size={12} twinkle className="absolute top-[22%] right-[16%] text-white [animation-delay:.8s]" />
-        <Sparkle size={22} twinkle className="absolute top-[58%] right-[10%] text-white [animation-delay:1.6s]" />
-        {loom ? (
-          <Stitch className="absolute top-[70%] left-0 w-1/2 -rotate-6 text-periwinkle" />
-        ) : (
-          <Bow size={40} className="absolute top-[64%] left-[10%] -rotate-12 text-lilac" />
-        )}
-      </motion.div>
-
-      <div className="relative z-10 flex items-end justify-between gap-4">
+      <div className="relative flex items-end justify-between gap-4 text-white">
         <div>
-          <p className="font-display text-3xl md:text-4xl">{t.worlds[world].name}</p>
-          <p className="mt-1 text-sm text-ink/75">{t.worlds[world].tagline}</p>
+          <p className="font-display text-4xl md:text-5xl">{t.worlds[world].name}</p>
+          <p className="mt-1 text-sm text-white/90">{t.worlds[world].tagline}</p>
         </div>
-        <span className="grid size-12 shrink-0 place-items-center rounded-full bg-ink text-white transition-transform duration-500 group-hover:-rotate-45">
+        <span className="grid size-12 shrink-0 place-items-center rounded-full bg-white text-ink transition-transform duration-500 group-hover:-rotate-45">
           <ArrowIcon />
         </span>
       </div>
@@ -68,8 +63,8 @@ export function Hero() {
   return (
     <section ref={ref} className="container-sora pt-8 pb-16 md:pt-14 md:pb-24">
       <div className="relative mb-10 md:mb-14">
-        <p className="eyebrow mb-5 inline-flex items-center gap-2">
-          <Sparkle size={12} className="text-accent" />
+        <p className="eyebrow mb-5 inline-flex items-center gap-3">
+          <span aria-hidden className="h-px w-8 bg-current" />
           {t.home.heroEyebrow}
         </p>
         <h1 className="text-display max-w-[12ch]">

@@ -2,8 +2,10 @@
 
 import clsx from "clsx";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { useEffect } from "react";
 import type { World } from "@/site.config";
+import { images } from "@/lib/images";
 import { t } from "@/lib/i18n";
 
 /**
@@ -34,7 +36,9 @@ export function WorldToggle({ value, onChange, className }: { value: World; onCh
                 transition={{ type: "spring", stiffness: 380, damping: 28 }}
               />
             )}
-            <span className="mr-1.5" aria-hidden>{w === "loom" ? "🪻" : "🍄"}</span>
+            <span aria-hidden className="relative mr-2 inline-block size-6 overflow-hidden rounded-full align-middle ring-2 ring-white/70">
+              <Image src={(w === "loom" ? images.loomDress : images.giftBox).src} alt="" fill sizes="24px" className="object-cover" />
+            </span>
             {t.worlds[w].name}
           </button>
         );
