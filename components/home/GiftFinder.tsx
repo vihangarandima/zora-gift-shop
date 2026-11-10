@@ -1,16 +1,18 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { Sparkle } from "@/components/doodles";
 import { categories } from "@/data/categories";
 import { products } from "@/data/products";
 import { Button, buttonClass } from "@/components/ui/Button";
 import { ArrowIcon, WhatsAppIcon } from "@/components/ui/Icons";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Aura } from "@/components/ui/Aura";
 import { confetti } from "@/lib/confetti";
+import { images } from "@/lib/images";
 import { t } from "@/lib/i18n";
 import { whatsappLink } from "@/site.config";
 
@@ -63,7 +65,15 @@ export function GiftFinder() {
   const summary = done ? qs.map((q, i) => `${q.q} ${q.options[answers[i]]}`).join("\n") : "";
 
   return (
-    <section data-world="gift" className="container-sora py-16 md:py-24" aria-labelledby="finder-title">
+    <section data-world="gift" className="container-sora py-12 md:py-20" aria-labelledby="finder-title">
+      <div className="relative isolate overflow-hidden rounded-xl2 bg-gradient-to-br from-tint via-white to-blush/60 px-5 py-14 shadow-soft ring-1 ring-blush md:px-10 md:py-20">
+      <Aura />
+      <div aria-hidden className="pointer-events-none absolute top-12 left-10 hidden w-40 -rotate-6 overflow-hidden rounded-card shadow-lift ring-4 ring-white lg:block xl:w-48">
+        <div className="relative aspect-[4/5]"><Image src={images.giftPlush.src} alt="" fill sizes="12rem" className="object-cover" /></div>
+      </div>
+      <div aria-hidden className="pointer-events-none absolute right-10 bottom-12 hidden w-40 rotate-6 overflow-hidden rounded-card shadow-lift ring-4 ring-white lg:block xl:w-48">
+        <div className="relative aspect-[4/5]"><Image src={images.loomDress.src} alt="" fill sizes="12rem" className="object-cover" /></div>
+      </div>
       <div className="mx-auto max-w-3xl text-center">
         <SectionHeading align="center" eyebrow={t.home.finderEyebrow} title={<span id="finder-title">{t.home.finderTitle}</span>} note={t.home.finderNote} />
 
@@ -100,9 +110,7 @@ export function GiftFinder() {
               </motion.div>
             ) : (
               <motion.div key="result" initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ type: "spring", stiffness: 260, damping: 22 }}>
-                <p className="font-display mb-6 inline-flex items-center gap-2 text-3xl">
-                  <Sparkle size={18} className="text-lilac" /> {t.finder.resultTitle}
-                </p>
+                <p className="font-display mb-6 text-3xl">{t.finder.resultTitle}</p>
                 {result!.picks.length > 0 ? (
                   <div className="grid grid-cols-2 gap-4 text-left md:grid-cols-4">
                     {result!.picks.map((p) => <ProductCard key={p.id} product={p} />)}
@@ -138,6 +146,7 @@ export function GiftFinder() {
             )}
           </AnimatePresence>
         </div>
+      </div>
       </div>
     </section>
   );

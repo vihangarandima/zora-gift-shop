@@ -21,12 +21,19 @@ function Carousel({ world }: { world: World }) {
   if (!items.length) {
     const socials = siteConfig.socials[world].filter((s) => s.url);
     return (
-      <div className="flex flex-col items-start gap-5 rounded-xl2 bg-white p-6 shadow-soft ring-1 ring-blush md:flex-row md:items-center md:justify-between md:p-10">
-        <div className="flex items-center gap-5">
-          <span className="relative size-16 shrink-0 overflow-hidden rounded-full ring-4 ring-tint">
-            <Image src={categoriesFor(world)[0].image.src} alt="" fill sizes="64px" className="object-cover" />
-          </span>
-          <p className="max-w-md text-lg">{t.home.newInEmpty}</p>
+      <div className="relative isolate flex flex-col items-start gap-6 overflow-hidden rounded-xl2 bg-gradient-to-r from-white via-white to-accent-soft p-6 shadow-soft ring-1 ring-blush md:flex-row md:items-center md:justify-between md:p-10">
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
+          <div className="flex shrink-0" aria-hidden>
+            {categoriesFor(world).slice(0, 3).map((c, i) => (
+              <span key={c.id} className={clsx("relative size-16 overflow-hidden rounded-2xl shadow-soft ring-4 ring-white md:size-20", i && "-ml-5", i === 1 ? "rotate-3" : "-rotate-3")}>
+                <Image src={c.image.src} alt="" fill sizes="80px" className="object-cover" style={{ objectPosition: c.focus }} />
+              </span>
+            ))}
+          </div>
+          <div>
+            <p className="font-display text-2xl md:text-3xl">{t.home.newInSoon}</p>
+            <p className="mt-1 max-w-md text-ink/75">{t.home.newInEmpty}</p>
+          </div>
         </div>
         <div className="flex flex-wrap gap-2">
           {socials.map((s) => (
@@ -92,7 +99,7 @@ export function WorldSection() {
   const [world, setWorld] = useState<World>("gift");
 
   return (
-    <section className="container-sora py-16 md:py-24" aria-labelledby="world-title">
+    <section className="container-sora py-12 md:py-20" aria-labelledby="world-title">
       <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
         <SectionHeading eyebrow={t.home.worldEyebrow} title={<span id="world-title">{t.home.worldTitle}</span>} />
         <WorldToggle value={world} onChange={setWorld} className="self-start md:self-auto" />

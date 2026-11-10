@@ -67,7 +67,7 @@ export function SocialWall() {
   const rest = items.filter((i) => i.network !== "instagram");
 
   return (
-    <section className="container-sora py-16 md:py-24">
+    <section className="container-sora py-12 md:py-20">
       <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
         <SectionHeading eyebrow={t.home.socialEyebrow} title={t.home.socialTitle} />
         <p className="font-hand text-2xl text-plum">

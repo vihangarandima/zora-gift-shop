@@ -1,9 +1,11 @@
 import { BrandStory } from "@/components/home/BrandStory";
 import { Club } from "@/components/home/Club";
 import { EditorialBand } from "@/components/home/EditorialBand";
+import { Gallery } from "@/components/home/Gallery";
 import { GiftBoxTeaser } from "@/components/home/GiftBoxTeaser";
 import { GiftFinder } from "@/components/home/GiftFinder";
 import { Hero } from "@/components/home/Hero";
+import { Promises } from "@/components/home/Promises";
 import { SocialWall } from "@/components/home/SocialWall";
 import { WorldSection } from "@/components/home/WorldSection";
 import { ProductCard } from "@/components/ui/ProductCard";
@@ -39,7 +41,9 @@ export default function Home() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />
       <Hero />
+      <Gallery />
       <WorldSection />
+      <Promises />
       <BrandStory />
       <EditorialBand />
       <GiftBoxTeaser />

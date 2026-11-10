@@ -7,7 +7,7 @@ import { t } from "@/lib/i18n";
 
 export function BrandStory() {
   return (
-    <section className="container-sora grid gap-12 py-16 md:py-28 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
+    <section className="container-sora grid gap-12 py-12 md:py-20 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
       <Reveal className="flex flex-col gap-6 lg:sticky lg:top-32 lg:self-start">
         <SectionHeading eyebrow={t.home.storyEyebrow} title={t.home.storyTitle} />
         <p className="max-w-lg text-lg leading-relaxed text-ink/80">{t.home.storyBody}</p>

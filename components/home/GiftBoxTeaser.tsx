@@ -10,7 +10,7 @@ const { fillings } = siteConfig.giftBox;
 
 export function GiftBoxTeaser() {
   return (
-    <section data-world="gift" className="container-sora py-16 md:py-28">
+    <section data-world="gift" className="container-sora py-12 md:py-20">
       <div className="grid items-center gap-10 overflow-hidden rounded-xl2 bg-white p-6 shadow-soft ring-1 ring-blush md:p-12 lg:grid-cols-2 lg:gap-16">
         <Reveal className="flex flex-col gap-6">
           <SectionHeading eyebrow={t.home.boxEyebrow} title={t.home.boxTitle} />

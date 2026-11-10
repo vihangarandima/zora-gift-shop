@@ -4,6 +4,8 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
+import { Aura } from "@/components/ui/Aura";
+import { ButtonLink } from "@/components/ui/Button";
 import { ArrowIcon } from "@/components/ui/Icons";
 import { Logo } from "@/components/ui/Logo";
 import { WordsUp } from "@/components/ui/Reveal";
@@ -61,7 +63,9 @@ export function Hero() {
   const [l1, l2, l3] = t.home.heroTitle;
 
   return (
-    <section ref={ref} className="container-sora pt-8 pb-16 md:pt-14 md:pb-24">
+    <section ref={ref} className="relative isolate">
+      <Aura className="[mask-image:linear-gradient(#000_75%,transparent)]" />
+      <div className="container-sora pt-8 pb-6 md:pt-14 md:pb-10">
       <div className="relative mb-10 md:mb-14">
         <p className="eyebrow mb-5 inline-flex items-center gap-3">
           <span aria-hidden className="h-px w-8 bg-current" />
@@ -73,6 +77,24 @@ export function Hero() {
           <WordsUp text={l2} delay={0.12} />
           <WordsUp text={l3} delay={0.24} className="text-plum italic" />
         </h1>
+        <p style={{ ["--d" as string]: "0.4s" }} className="rise-in mt-6 max-w-xl text-lg leading-relaxed text-ink/80">
+          {t.home.heroBody}
+        </p>
+        <div style={{ ["--d" as string]: "0.5s" }} className="rise-in mt-7 flex flex-wrap gap-3">
+          <ButtonLink href="/shop" size="lg">
+            {t.home.heroCtaShop} <ArrowIcon width={18} height={18} />
+          </ButtonLink>
+          <ButtonLink href="/gift-box" size="lg" variant="secondary">{t.cta.buildBox}</ButtonLink>
+        </div>
+        {/* Desktop: two tilted photos fill the space beside the headline */}
+        <div aria-hidden style={{ ["--d" as string]: "0.45s" }} className="rise-in pointer-events-none absolute top-0 right-[4%] hidden h-96 w-[24rem] lg:block">
+          <div className="absolute top-24 left-0 z-10 w-48 -rotate-6 overflow-hidden rounded-card shadow-lift ring-4 ring-white">
+            <div className="relative aspect-[4/5]"><Image src={images.giftHamper.src} alt="" fill sizes="12rem" className="object-cover" /></div>
+          </div>
+          <div className="absolute top-0 right-0 w-52 rotate-3 overflow-hidden rounded-card shadow-lift ring-4 ring-white">
+            <div className="relative aspect-[4/5]"><Image src={images.loomSleepwear.src} alt="" fill sizes="13rem" className="object-cover" /></div>
+          </div>
+        </div>
         <p
           style={{ ["--d" as string]: "0.6s", ["--r" as string]: "-4deg" }}
           className="rise-in font-hand mt-4 text-2xl text-plum md:absolute md:right-0 md:bottom-4 md:mt-0 md:text-3xl"
@@ -84,6 +106,7 @@ export function Hero() {
       <div style={{ ["--d" as string]: "0.3s" }} className="rise-in flex flex-col gap-4 md:flex-row">
         <Panel world="loom" progress={scrollYProgress} />
         <Panel world="gift" progress={scrollYProgress} />
+      </div>
       </div>
     </section>
   );

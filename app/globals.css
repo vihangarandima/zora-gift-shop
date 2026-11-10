@@ -136,6 +136,19 @@ body::after {
   }
 }
 
+/* Soft colour glows behind sections. */
+.aura-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(70px);
+  animation: aura-float 20s ease-in-out infinite alternate;
+}
+@keyframes aura-float {
+  to {
+    transform: translate3d(6%, 8%, 0) scale(1.12);
+  }
+}
+
 @keyframes marquee {
   to {
     transform: translateX(-50%);
